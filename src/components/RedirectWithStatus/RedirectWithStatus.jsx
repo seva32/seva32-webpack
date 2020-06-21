@@ -7,7 +7,6 @@ const RedirectWithStatus = ({ status, from, to }) => (
   <Route
     render={(props) => {
       const { staticContext } = props;
-      console.log(props);
       if (staticContext) {
         staticContext.status = status; // eslint-disable-line no-param-reassign
       }

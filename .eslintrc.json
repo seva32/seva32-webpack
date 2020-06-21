@@ -1,11 +1,11 @@
 {
   "extends": ["airbnb", "eslint:recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
-  "settings": {
-    "import/resolver": {
-      "webpack": { "config": "./webpack/webpack.prod.config.js" }
-    }
-  },
+  // "settings": {
+  //   "import/resolver": {
+  //     "webpack": { "config": "./webpack/webpack.prod.config.js" }
+  //   }
+  // },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -62,6 +62,12 @@
       {
         "allowShortCircuit": true,
         "allowTernary": true
+      }
+    ],
+    "import/no-cycle": [
+      "error",
+      {
+        "maxDepth": 1
       }
     ]
   }

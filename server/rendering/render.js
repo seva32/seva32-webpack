@@ -75,7 +75,6 @@ function render(req, res, preloadedState, routeData) {
       )};</script></head>`
     );
 
-  console.log(html);
   if (context.url) {
     res.redirect(context.status, context.url);
   } else {

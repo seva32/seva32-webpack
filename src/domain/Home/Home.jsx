@@ -12,7 +12,7 @@ import * as Styles from "./Home.style";
 const Home = () => (
   <Layout>
     <Helmet>
-      <title>Ho!</title>
+      <title>Home</title>
       <link rel="canonical" href="https://www.example.com/" />
     </Helmet>
     {/* <h1 className={styles.red}>Home</h1> */}
