@@ -36,7 +36,7 @@ const Posts = ({ posts, error, fetchPosts }) => {
         <List>
           {posts.map((post) => (
             <List.Item key={post.id}>
-              <List.Header>{post.title}</List.Header>A lovely luck
+              <List.Header>{post.title}</List.Header>The lovely luck
             </List.Item>
           ))}
         </List>

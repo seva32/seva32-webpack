@@ -1,7 +1,6 @@
 require("dotenv").config({ silent: true });
 
 const webpack = require("webpack");
-// eslint-disable-next-line import/no-extraneous-dependencies
 const path = require("path");
 
 module.exports = {
@@ -26,8 +25,6 @@ module.exports = {
       NODE_ENV: "development", // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false,
     }),
-    new webpack.optimize.ModuleConcatenationPlugin(), // disable module processing in Babel
-    // "presets": [{"modules": false }]
   ],
 
   module: {
@@ -60,23 +57,5 @@ module.exports = {
         ],
       },
     ],
-  },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        styles: {
-          name: "styles",
-          test: /\.css$/,
-          chunks: "all",
-          enforce: true,
-        },
-        vendor: {
-          chunks: "initial",
-          test: "vendor",
-          name: "vendor",
-          enforce: true,
-        },
-      },
-    },
   },
 };

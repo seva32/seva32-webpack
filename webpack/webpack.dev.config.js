@@ -45,11 +45,11 @@ module.exports = {
 
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: "react-hot-loader/webpack",
-      },
+      // {
+      //   test: /\.jsx?$/,
+      //   exclude: /node_modules/,
+      //   use: ["babel-loader", "react-hot-loader/webpack"],
+      // },
       {
         test: /\.module\.s(a|c)ss$/,
         use: [

@@ -18,10 +18,6 @@ module.exports = {
   mode: "production",
 
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    //   sourceMap: true,
-    //   output: { comments: false },
-    // }),
     new HTMLWebpackPlugin({
       template: path.resolve("src/index.html"),
       minify: { collapseWhitespace: true },
@@ -89,5 +85,23 @@ module.exports = {
       },
       ...config.module.rules,
     ],
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true,
+        },
+        vendor: {
+          chunks: "initial",
+          test: "vendor",
+          name: "vendor",
+          enforce: true,
+        },
+      },
+    },
   },
 };

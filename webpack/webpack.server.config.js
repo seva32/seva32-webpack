@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const config = require("./webpack.config");
@@ -6,14 +5,14 @@ const config = require("./webpack.config");
 const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  devtool: "#eval-source-map",
+  devtool: "inline-source-map",
 
   entry: {
     app: path.resolve("src/App"),
     rootReducer: path.resolve("src/reducers/index"),
   },
 
-  mode: "none",
+  mode: "development",
 
   resolve: config.resolve,
 
@@ -23,7 +22,7 @@ module.exports = {
     libraryTarget: "commonjs",
   },
 
-  externals: ["react-helmet-async", "react-helmet"],
+  externals: ["react-helmet-async"],
 
   plugins: [
     new MiniCssExtractPlugin({
