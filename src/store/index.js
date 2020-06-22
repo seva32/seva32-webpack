@@ -6,7 +6,16 @@ import reduxThunk from "redux-thunk";
 import reduxPromise from "redux-promise";
 import logger from "redux-logger";
 import merge from "deepmerge";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import reducers from "../reducers";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 const configureStore = (initialState) => {
   // token from current session
@@ -22,7 +31,8 @@ const configureStore = (initialState) => {
   initialState = merge(initialState, buffer);
 
   const enhancer = compose(applyMiddleware(reduxPromise, reduxThunk, logger));
-  return createStore(reducers, initialState, enhancer);
+  return createStore(persistedReducer, initialState, enhancer);
 };
 const store = configureStore({});
-export default store;
+const persistor = persistStore(store);
+export default { store, persistor };
