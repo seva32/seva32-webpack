@@ -10,9 +10,10 @@ import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "styled-components";
 import { CookiesProvider } from "react-cookie";
+import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./App";
-import store from "./store";
+import Store from "./store";
 import rootReducer from "./reducers";
 import { theme } from "./utils/styles/theme";
 import { GlobalStyle } from "./utils/styles/global";
@@ -23,16 +24,18 @@ function render(Root) {
     <AppContainer>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Provider store={store}>
-          <AppProvider>
-            <HelmetProvider>
-              <CookiesProvider>
-                <BrowserRouter>
-                  <Root />
-                </BrowserRouter>
-              </CookiesProvider>
-            </HelmetProvider>
-          </AppProvider>
+        <Provider store={Store.store}>
+          <PersistGate loading={null} persistor={Store.persistor}>
+            <AppProvider>
+              <HelmetProvider>
+                <CookiesProvider>
+                  <BrowserRouter>
+                    <Root />
+                  </BrowserRouter>
+                </CookiesProvider>
+              </HelmetProvider>
+            </AppProvider>
+          </PersistGate>
         </Provider>
       </ThemeProvider>
     </AppContainer>,
