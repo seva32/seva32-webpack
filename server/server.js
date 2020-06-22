@@ -5,6 +5,7 @@ const cookiesMiddleware = require("universal-cookie-express");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const logger = require("./middleware/logger");
 const { devMiddleware, hotMiddleware } = require("./middleware/webpack");
 const router = require("./router/router");
@@ -21,6 +22,7 @@ app.set("x-powered-by", false);
 app.use(compression());
 app.use(logger);
 app.use(bodyParser.json({ type: "*/*" }));
+app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
   app.use(
