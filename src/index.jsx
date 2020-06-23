@@ -11,6 +11,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "styled-components";
 import { CookiesProvider } from "react-cookie";
 import { PersistGate } from "redux-persist/integration/react";
+import Loadable from "react-loadable";
 
 import App from "./App";
 import Store from "./store";
@@ -43,14 +44,16 @@ function render(Root) {
   );
 }
 
-render(App);
+Loadable.preloadReady().then(() => {
+  render(App);
 
-if (module.hot) {
-  module.hot.accept("./App.jsx", () => {
-    render(App);
-  });
+  if (module.hot) {
+    module.hot.accept("./App.jsx", () => {
+      render(App);
+    });
 
-  module.hot.accept("./reducers/index.js", () => {
-    store.replaceReducer(rootReducer);
-  });
-}
+    module.hot.accept("./reducers/index.js", () => {
+      store.replaceReducer(rootReducer);
+    });
+  }
+});

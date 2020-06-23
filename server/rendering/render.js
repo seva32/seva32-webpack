@@ -69,6 +69,8 @@ function render(req, res, preloadedState, routeData) {
 
   const finalState = store.getState();
 
+  const bundles = getBundles(stats, modules);
+
   const html = template
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
     .replace("</head>", `${helmet.link.toString()}</head>`)
@@ -80,6 +82,14 @@ function render(req, res, preloadedState, routeData) {
       )};</script><script>window.__ROUTE_DATA__=${serialize(
         routeData
       )};</script></head>`
+    )
+    .replace(
+      "<body>",
+      `<body>${bundles
+        .map((bundle) => {
+          return `<script src="/build/${bundle.file}"></script>`;
+        })
+        .join("\n")}`
     );
 
   if (context.url) {
