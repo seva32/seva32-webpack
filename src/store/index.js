@@ -36,7 +36,10 @@ const configureStore = (initialState) => {
 
   initialState = merge(initialState, buffer);
 
-  const enhancer = compose(applyMiddleware(reduxPromise, reduxThunk, logger));
+  const enhancer =
+    process.env.NODE_ENV !== "production"
+      ? compose(applyMiddleware(reduxPromise, reduxThunk, logger))
+      : compose(applyMiddleware(reduxPromise, reduxThunk));
   return createStore(persistedReducer, initialState, enhancer);
 };
 const store = configureStore({});
