@@ -12,6 +12,8 @@ const serialize = require("serialize-javascript");
 const { devMiddleware } = require("../middleware/webpack");
 const { appWrapp: HelmetProvider, helmetContext } = require("./helmet.jsx");
 const { appWrapp: LoadableCapture, modules } = require("./loadable.jsx");
+const { getBundles } = require("react-loadable/webpack");
+const stats = require("../../build/react-loadable.json");
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
