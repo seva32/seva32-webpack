@@ -31,7 +31,7 @@ const Posts = ({ posts, error, fetchPosts }) => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="example.com" />
       </Helmet>
-      <h1>Posts</h1>
+      <h1>Post Page</h1>
       {posts && posts.length !== 0 ? (
         <List>
           {posts.map((post) => (

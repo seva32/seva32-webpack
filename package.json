@@ -9,6 +9,8 @@
   "scripts": {
     "clean": "rm -rf build",
     "lint": "eslint src --ext .js*",
+    "build:server": "webpack --config webpack/webpack.server.config.js",
+    "start:dev": "node --trace-deprecation server/server.js",
     "dev": "yarn run clean && yarn run build:server && yarn run start:dev",
     "pro": "webpack --config webpack/webpack.prod.config.js && webpack --config webpack/webpack.server.config.js && node --trace-deprecation server/pre-server.js",
     "test": "export NODE_ENV=test && jest --watch"
