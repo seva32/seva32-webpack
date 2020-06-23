@@ -2,6 +2,7 @@ const passport = require("passport");
 const Auth = require("../contollers/authentications");
 // eslint-disable-next-line no-unused-vars
 const passportConfig = require("../middleware/passport");
+const Loadable = require("react-loadable");
 
 // creo un obj para indicar que uso jwt y no cookies que es default de passport
 const requireAuth = passport.authenticate("jwt", { session: false });
@@ -16,19 +17,6 @@ const loadData = require("../../src/utils/fetch/requireLoadData");
 const render = require("../rendering/render");
 
 module.exports = (app) => {
-  // eslint-disable-next-line no-unused-vars
-  app.get("/test", (req, res, next) => {
-    res.send([{ id: "uno", title: "uno" }]);
-  });
-
-  // eslint-disable-next-line no-unused-vars
-  app.post("/test", (req, res, next) => {
-    res.send({ token: "uno" });
-  });
-
-  app.get("/api/", requireAuth, (req, res) => {
-    res.send({ hola: "chola" });
-  });
   app.post("/api/signup", Auth.signup);
   app.post("/api/signin", requireSignin, Auth.signin);
 
@@ -36,7 +24,9 @@ module.exports = (app) => {
     // eslint-disable-next-line wrap-iife
     (async function load() {
       const posts = await loadData("posts");
-      render(req, res, { posts }, {});
+      Loadable.preloadAll(() => {
+        render(req, res, { posts }, {});
+      });
     })();
   });
 
@@ -44,11 +34,15 @@ module.exports = (app) => {
     // eslint-disable-next-line wrap-iife
     (async function load() {
       const todos = await loadData("todos");
-      render(req, res, {}, { todos });
+      Loadable.preloadAll(() => {
+        render(req, res, {}, { todos });
+      });
     })();
   });
 
   app.get("*", (req, res) => {
-    render(req, res, {});
+    Loadable.preloadAll(() => {
+      render(req, res, {});
+    });
   });
 };
