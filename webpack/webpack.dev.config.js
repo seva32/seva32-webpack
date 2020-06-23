@@ -51,6 +51,19 @@ module.exports = {
       //   use: ["babel-loader", "react-hot-loader/webpack"],
       // },
       {
+        enforce: "pre",
+        test: /\.(js|jsx)$/i,
+        exclude: /node_modules/,
+        use: {
+          loader: "eslint-loader",
+          options: {
+            fix: true,
+            failOnWarning: false,
+            failOnError: false,
+          },
+        },
+      },
+      {
         test: /\.module\.s(a|c)ss$/,
         use: [
           {

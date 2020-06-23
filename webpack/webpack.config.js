@@ -2,7 +2,6 @@ require("dotenv").config({ silent: true });
 
 const webpack = require("webpack");
 const path = require("path");
-const { ReactLoadablePlugin } = require("react-loadable/webpack");
 const ReactLoadableSSRAddon = require("react-loadable-ssr-addon");
 
 module.exports = {
@@ -38,7 +37,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: ["babel-loader", "eslint-loader"],
+        use: ["babel-loader"],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
