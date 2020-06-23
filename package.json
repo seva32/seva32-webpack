@@ -7,21 +7,7 @@
     "node": "14.2.0"
   },
   "scripts": {
-    "start": "node --trace-deprecation --trace-warnings server/pre-server.js",
-    "start:dashboard": "webpack-dashboard node server/server.js",
-    "clean": "rm -rf build",
-    "clean:modules": "rm -rf node_modules",
-    "call": "npm run clean && npm run clean:modules",
-    "lint": "eslint src --ext .js*",
-    "test": "export NODE_ENV=test && jest --watch",
-    "preheroku": "rm -rf build && rm -rf node_modules && npm install",
-    "//": "local env uses dev & start:prod",
-    "start:dev": "node --trace-deprecation --trace-warnings server/server.js",
-    "dev": "npm run clean && npm run build:server && npm run start:dev",
-    "build": "webpack --config webpack/webpack.prod.config.js",
-    "build:server": "webpack --config webpack/webpack.server.config.js",
-    "postinstall": "npm run build && npm run build:server",
-    "pro": "npm run clean && npm run postinstall && node --trace-deprecation server/pre-server.js"
+    "start": "npm install && webpack --config webpack/webpack.prod.config.js && webpack --config webpack/webpack.server.config.js && node --trace-deprecation server/pre-server.js"
   },
   "author": "seva32",
   "private": true,
