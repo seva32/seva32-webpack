@@ -12,8 +12,10 @@ const serialize = require("serialize-javascript");
 const { devMiddleware } = require("../middleware/webpack");
 const { appWrapp: HelmetProvider, helmetContext } = require("./helmet.jsx");
 const { appWrapp: LoadableCapture, modules } = require("./loadable.jsx");
-const { getBundles } = require("react-loadable/webpack");
-const stats = require("../../build/react-loadable.json");
+// const { getBundles } = require("react-loadable/webpack");
+// const stats = require("../../build/react-loadable.json");
+const { getBundles } = require("react-loadable-ssr-addon");
+const manifest = require("../../build/react-loadable-ssr-addon.json");
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -69,7 +71,17 @@ function render(req, res, preloadedState, routeData) {
 
   const finalState = store.getState();
 
-  const bundles = getBundles(stats, modules);
+  const bundles = getBundles(manifest, [
+    ...manifest.entrypoints,
+    ...Array.from(modules),
+  ]);
+
+  const styles = bundles.css || [];
+  const scripts = bundles.js || [];
+
+  // const stylesTags = styles.map(style => {
+  //         return `<link href="/dist/${style.file}" rel="stylesheet" />`;
+  //       }).join('\n');
 
   const html = template
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
@@ -84,12 +96,20 @@ function render(req, res, preloadedState, routeData) {
       )};</script></head>`
     )
     .replace(
-      "<body>",
-      `<body>${bundles
-        .map((bundle) => {
-          return `<script src="/build/${bundle.file}"></script>`;
+      "</head>",
+      `${styles
+        .map((style) => {
+          return `<link href="/dist/${style.file}" rel="stylesheet" />`;
         })
-        .join("\n")}`
+        .join("\n")}</head>`
+    )
+    .replace(
+      "</body>",
+      `${scripts
+        .map((script) => {
+          return `<script src="/dist/${script.file}"></script>`;
+        })
+        .join("\n")}</body>`
     );
 
   if (context.url) {

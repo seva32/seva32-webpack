@@ -1,6 +1,7 @@
 /* eslint-disable wrap-iife */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable operator-linebreak */
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import loadData from "../../utils/fetch/loadData";
@@ -12,7 +13,11 @@ function Todos(props) {
   useEffect(() => {
     if (props.staticContext && props.staticContext.data.todos) {
       setTodosArr([...todosArr, ...props.staticContext.data.todos]);
-    } else if (window.__ROUTE_DATA__ && window.__ROUTE_DATA__.todos) {
+    } else if (
+      typeof window !== "undefined" &&
+      window.__ROUTE_DATA__ &&
+      window.__ROUTE_DATA__.todos
+    ) {
       setTodosArr([...todosArr, ...window.__ROUTE_DATA__.todos]);
       delete window.__ROUTE_DATA__;
     } else {

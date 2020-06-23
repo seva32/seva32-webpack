@@ -12,6 +12,10 @@ import { SignupFormUI } from "./domain/SignupPage";
 import { Signout } from "./domain/SignoutPage";
 import Loading from "./components/Loading";
 
+if (!process.env.BROWSER) {
+  global.window = {};
+}
+
 const LoadableTodos = Loadable({
   loader: () => import("./domain/Todos/Todos"),
   loading: Loading,

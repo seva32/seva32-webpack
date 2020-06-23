@@ -44,16 +44,22 @@ function render(Root) {
   );
 }
 
-Loadable.preloadReady().then(() => {
-  render(App);
-
-  if (module.hot) {
-    module.hot.accept("./App.jsx", () => {
+window.onload = () => {
+  Loadable.preloadReady()
+    .then(() => {
       render(App);
-    });
 
-    module.hot.accept("./reducers/index.js", () => {
-      store.replaceReducer(rootReducer);
+      if (module.hot) {
+        module.hot.accept("./App.jsx", () => {
+          render(App);
+        });
+
+        module.hot.accept("./reducers/index.js", () => {
+          Store.store.replaceReducer(rootReducer);
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }
-});
+};

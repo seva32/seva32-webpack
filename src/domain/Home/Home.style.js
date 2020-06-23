@@ -5,4 +5,5 @@ export const StyledContainer = styled("div")`
   height: 80vh;
   position: relative;
   margin: auto;
+  border: 3px solid black;
 `;

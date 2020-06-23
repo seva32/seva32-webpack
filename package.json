@@ -7,7 +7,7 @@
     "node": "14.2.0"
   },
   "scripts": {
-    "start": "node --trace-deprecation server/pre-server.js",
+    "start": "node --trace-deprecation --trace-warnings server/pre-server.js",
     "start:dashboard": "webpack-dashboard node server/server.js",
     "clean": "rm -rf build",
     "clean:modules": "rm -rf node_modules",
@@ -15,12 +15,12 @@
     "lint": "eslint src --ext .js*",
     "test": "export NODE_ENV=test && jest --watch",
     "//": "local env uses dev & start:prod",
-    "start:dev": "node --trace-deprecation server/server.js",
+    "start:dev": "node --trace-deprecation --trace-warnings server/server.js",
     "dev": "yarn run clean && yarn run build:server && yarn run start:dev",
     "build": "webpack --config webpack/webpack.prod.config.js",
     "build:server": "webpack --config webpack/webpack.server.config.js",
     "postinstall": "yarn run build && yarn run build:server",
-    "pro": "yarn install && yarn run postinstall && node --trace-deprecation server/pre-server.js"
+    "pro": "yarn run clean && yarn run postinstall && node --trace-deprecation server/pre-server.js"
   },
   "author": "seva32",
   "private": true,
@@ -100,6 +100,7 @@
     "react-helmet-async": "^1.0.6",
     "react-hot-loader": "^4.12.21",
     "react-loadable": "^5.5.0",
+    "react-loadable-ssr-addon": "^0.2.3",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
@@ -118,6 +119,7 @@
     "yup": "^0.29.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",

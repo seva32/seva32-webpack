@@ -2,7 +2,6 @@ const passport = require("passport");
 const Auth = require("../contollers/authentications");
 // eslint-disable-next-line no-unused-vars
 const passportConfig = require("../middleware/passport");
-const Loadable = require("react-loadable");
 
 // creo un obj para indicar que uso jwt y no cookies que es default de passport
 const requireAuth = passport.authenticate("jwt", { session: false });
@@ -24,9 +23,7 @@ module.exports = (app) => {
     // eslint-disable-next-line wrap-iife
     (async function load() {
       const posts = await loadData("posts");
-      Loadable.preloadAll(() => {
-        render(req, res, { posts }, {});
-      });
+      render(req, res, { posts }, {});
     })();
   });
 
@@ -34,15 +31,11 @@ module.exports = (app) => {
     // eslint-disable-next-line wrap-iife
     (async function load() {
       const todos = await loadData("todos");
-      Loadable.preloadAll(() => {
-        render(req, res, {}, { todos });
-      });
+      render(req, res, {}, { todos });
     })();
   });
 
   app.get("*", (req, res) => {
-    Loadable.preloadAll(() => {
-      render(req, res, {});
-    });
+    render(req, res, {});
   });
 };

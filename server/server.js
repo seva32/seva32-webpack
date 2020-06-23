@@ -6,6 +6,7 @@ const compression = require("compression");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const Loadable = require("react-loadable");
 const logger = require("./middleware/logger");
 const { devMiddleware, hotMiddleware } = require("./middleware/webpack");
 const router = require("./router/router");
@@ -40,12 +41,18 @@ app.use(cookiesMiddleware());
 
 router(app);
 
-const server = app.listen(process.env.PORT || 8080, () => {
-  console.log(
-    "Express started at http://localhost:%d\n",
-    server.address().port
-  );
-  if (process.env.NODE_ENV !== "production") {
-    console.log("Waiting for webpack...\n");
-  }
-});
+Loadable.preloadAll()
+  .then(() => {
+    const server = app.listen(process.env.PORT || 8080, () => {
+      console.log(
+        "Express started at http://localhost:%d\n",
+        server.address().port
+      );
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Waiting for webpack...\n");
+      }
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
