@@ -11,6 +11,7 @@ const { CookiesProvider } = require("react-cookie");
 const serialize = require("serialize-javascript");
 const { devMiddleware } = require("../middleware/webpack");
 const { appWrapp: HelmetProvider, helmetContext } = require("./helmet.jsx");
+const { appWrapp: LoadableCapture, modules } = require("./loadable.jsx");
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -40,18 +41,22 @@ function render(req, res, preloadedState, routeData) {
 
   const body = ReactDOMServer.renderToString(
     React.createElement(
-      HelmetProvider,
+      LoadableCapture,
       {},
       React.createElement(
-        Provider,
-        { store },
+        HelmetProvider,
+        {},
         React.createElement(
-          CookiesProvider,
-          { cookies: req.universalCookies },
+          Provider,
+          { store },
           React.createElement(
-            StaticRouter,
-            { location: req.url, context },
-            React.createElement(App)
+            CookiesProvider,
+            { cookies: req.universalCookies },
+            React.createElement(
+              StaticRouter,
+              { location: req.url, context },
+              React.createElement(App)
+            )
           )
         )
       )
