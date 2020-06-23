@@ -10,10 +10,11 @@ import RedirectWithStatus from "./components/RedirectWithStatus/RedirectWithStat
 import { SigninFormUI } from "./domain/SigninPage";
 import { SignupFormUI } from "./domain/SignupPage";
 import { Signout } from "./domain/SignoutPage";
+import Loading from "./components/Loading";
 
 const LoadableTodos = Loadable({
   loader: () => import("./domain/Todos/Todos"),
-  loading: () => <div>Loading...</div>,
+  loading: Loading,
 });
 
 const App = () => (
