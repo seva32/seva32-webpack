@@ -22,8 +22,13 @@ const configureStore = (initialState) => {
   // token from current session
   const token = localStorage.getItem("token") || "";
   // state from ssr
-  const preloadedState = window.__PRELOADED_STATE__ || {};
-  delete window.__PRELOADED_STATE__;
+  let preloadedState;
+  if (typeof window !== "undefined") {
+    preloadedState = window.__PRELOADED_STATE__ || {};
+    delete window.__PRELOADED_STATE__;
+  } else {
+    preloadedState = {};
+  }
 
   const buffer = merge(preloadedState, {
     auth: { authenticated: token, errorMessage: "" },

@@ -20,7 +20,7 @@ const Posts = ({ posts, error, fetchPosts }) => {
   return (
     <Layout>
       <Helmet>
-        <title>{`${posts.length !== 0 ? posts.length : ""} Posts`}</title>
+        <title>{`${posts.length !== 0 ? posts.length : ""} P`}</title>
         <meta property="og:title" content="Articles List" />
         <meta
           name="description"
@@ -31,7 +31,7 @@ const Posts = ({ posts, error, fetchPosts }) => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="example.com" />
       </Helmet>
-      <h1>Posters</h1>
+      <h1>Posts</h1>
       {posts && posts.length !== 0 ? (
         <List>
           {posts.map((post) => (

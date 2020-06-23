@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const config = require("./webpack.config");
 
-const devMode = process.env.NODE_ENV !== "production";
+// const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   devtool: "source-map",
@@ -23,8 +23,8 @@ module.exports = {
       minify: { collapseWhitespace: true },
     }),
     new MiniCssExtractPlugin({
-      filename: devMode ? "[name].css" : "[name].[hash].css",
-      chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
+      filename: "[name].[hash].css",
+      chunkFilename: "[id].[hash].css",
     }),
     ...config.plugins,
   ],
@@ -86,22 +86,22 @@ module.exports = {
       ...config.module.rules,
     ],
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        styles: {
-          name: "styles",
-          test: /\.css$/,
-          chunks: "all",
-          enforce: true,
-        },
-        vendor: {
-          chunks: "initial",
-          test: "vendor",
-          name: "vendor",
-          enforce: true,
-        },
-      },
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       styles: {
+  //         name: "styles",
+  //         test: /\.css$/,
+  //         chunks: "all",
+  //         enforce: true,
+  //       },
+  //       vendor: {
+  //         chunks: "initial",
+  //         test: "vendor",
+  //         name: "vendor",
+  //         enforce: true,
+  //       },
+  //     },
+  //   },
+  // },
 };

@@ -11,6 +11,11 @@ const { CookiesProvider } = require("react-cookie");
 const serialize = require("serialize-javascript");
 const { devMiddleware } = require("../middleware/webpack");
 const { appWrapp: HelmetProvider, helmetContext } = require("./helmet.jsx");
+const { appWrapp: LoadableCapture, modules } = require("./loadable.jsx");
+// const { getBundles } = require("react-loadable/webpack");
+// const stats = require("../../build/react-loadable.json");
+const { getBundles } = require("react-loadable-ssr-addon");
+const manifest = require("../../build/react-loadable-ssr-addon.json");
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -40,18 +45,22 @@ function render(req, res, preloadedState, routeData) {
 
   const body = ReactDOMServer.renderToString(
     React.createElement(
-      HelmetProvider,
+      LoadableCapture,
       {},
       React.createElement(
-        Provider,
-        { store },
+        HelmetProvider,
+        {},
         React.createElement(
-          CookiesProvider,
-          { cookies: req.universalCookies },
+          Provider,
+          { store },
           React.createElement(
-            StaticRouter,
-            { location: req.url, context },
-            React.createElement(App)
+            CookiesProvider,
+            { cookies: req.universalCookies },
+            React.createElement(
+              StaticRouter,
+              { location: req.url, context },
+              React.createElement(App)
+            )
           )
         )
       )
@@ -61,6 +70,18 @@ function render(req, res, preloadedState, routeData) {
   const { helmet } = helmetContext;
 
   const finalState = store.getState();
+
+  const bundles = getBundles(manifest, [
+    ...manifest.entrypoints,
+    ...Array.from(modules),
+  ]);
+
+  const styles = bundles.css || [];
+  const scripts = bundles.js || [];
+
+  // const stylesTags = styles.map(style => {
+  //         return `<link href="/dist/${style.file}" rel="stylesheet" />`;
+  //       }).join('\n');
 
   const html = template
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
@@ -73,6 +94,22 @@ function render(req, res, preloadedState, routeData) {
       )};</script><script>window.__ROUTE_DATA__=${serialize(
         routeData
       )};</script></head>`
+    )
+    .replace(
+      "</head>",
+      `${styles
+        .map((style) => {
+          return `<link href="/dist/${style.file}" rel="stylesheet" />`;
+        })
+        .join("\n")}</head>`
+    )
+    .replace(
+      "</body>",
+      `${scripts
+        .map((script) => {
+          return `<script src="/dist/${script.file}"></script>`;
+        })
+        .join("\n")}</body>`
     );
 
   if (context.url) {

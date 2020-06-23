@@ -9,6 +9,7 @@
     "@babel/plugin-transform-react-jsx-source",
     "@babel/plugin-proposal-function-bind",
     "react-hot-loader/babel",
+    "@babel/plugin-proposal-object-rest-spread",
     [
       "styled-components",
       {
