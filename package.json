@@ -7,7 +7,8 @@
     "node": "14.2.0"
   },
   "scripts": {
-    "start": "npm install && webpack --config webpack/webpack.prod.config.js && webpack --config webpack/webpack.server.config.js && node --trace-deprecation server/pre-server.js"
+    "start": "node --trace-deprecation server/pre-server.js",
+    "postinstall": "webpack --config webpack/webpack.prod.config.js && webpack --config webpack/webpack.server.config.js"
   },
   "author": "seva32",
   "private": true,
