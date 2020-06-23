@@ -11,16 +11,17 @@
     "start:dashboard": "webpack-dashboard node server/server.js",
     "clean": "rm -rf build",
     "clean:modules": "rm -rf node_modules",
-    "call": "yarn run clean && yarn run clean:modules",
+    "call": "npm run clean && npm run clean:modules",
     "lint": "eslint src --ext .js*",
     "test": "export NODE_ENV=test && jest --watch",
+    "preheroku": "rm -rf build && rm -rf node_modules && npm install",
     "//": "local env uses dev & start:prod",
     "start:dev": "node --trace-deprecation --trace-warnings server/server.js",
-    "dev": "yarn run clean && yarn run build:server && yarn run start:dev",
+    "dev": "npm run clean && npm run build:server && npm run start:dev",
     "build": "webpack --config webpack/webpack.prod.config.js",
     "build:server": "webpack --config webpack/webpack.server.config.js",
-    "postinstall": "yarn run build && yarn run build:server",
-    "pro": "yarn run clean && yarn run postinstall && node --trace-deprecation server/pre-server.js"
+    "postinstall": "npm run build && npm run build:server",
+    "pro": "npm run clean && npm run postinstall && node --trace-deprecation server/pre-server.js"
   },
   "author": "seva32",
   "private": true,
@@ -52,6 +53,7 @@
     "@babel/core": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-function-bind": "^7.10.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.3",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-react-jsx-source": "^7.10.1",
     "@babel/polyfill": "^7.10.1",
@@ -119,7 +121,6 @@
     "yup": "^0.29.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.10.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
