@@ -105,7 +105,9 @@
     "universal-cookie-express": "^4.0.3",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
-    "yup": "^0.29.1"
+    "yup": "^0.29.1",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
     "enzyme": "^3.11.0",
@@ -129,9 +131,7 @@
     "postcss-reporter": "^5.0.0",
     "postcss-url": "^8.0.0",
     "webpack-dashboard": "^3.2.0",
-    "webpack-dev-middleware": "^3.7.2",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-dev-server": "^3.11.0"
   },
   "optionalDependencies": {
     "fsevents": "*"
