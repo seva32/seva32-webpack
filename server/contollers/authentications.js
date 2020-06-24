@@ -1,8 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable object-shorthand */
-const jwt = require("jwt-simple");
-const User = require("../models/user");
-const config = require("./config");
+import jwt from "jwt-simple";
+import User from "../models/user";
+import config from "./config";
 
 // sub y iat son prop de jwt
 const tokenForUser = (user) => {
@@ -11,7 +11,7 @@ const tokenForUser = (user) => {
 };
 
 // eslint-disable-next-line consistent-return
-exports.signup = (req, res, next) => {
+export const signup = (req, res, next) => {
   // check if email exist
   //   const email = req.body.email;
   //   const password = req.body.password;
@@ -44,7 +44,7 @@ exports.signup = (req, res, next) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-exports.signin = (req, res, next) => {
+export const signin = (req, res, next) => {
   // user ya paso email y pass auth, doy token, ya tengo al user en req.user xq passport lo agrega al pasar por done(null, user);
   res.send({ token: tokenForUser(req.user) });
 };

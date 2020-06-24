@@ -30,5 +30,17 @@
         ]
       ]
     }
-  }
+  },
+  "overrides": [
+    {
+      "test": [
+        "./webpack"
+      ],
+      "presets": [
+        [
+          "@babel/preset-env"
+        ]
+      ]
+    }
+  ]
 }

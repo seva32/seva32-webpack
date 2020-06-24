@@ -1,29 +1,22 @@
-if (process.env.NODE_ENV === "production") {
-  module.exports = {
-    devMiddleware: {},
-    hotMiddleware: {},
-  };
-} else {
-  const webpack = require("webpack");
-  const webpackDevMiddleware = require("webpack-dev-middleware");
-  const webpackHotMiddleware = require("webpack-hot-middleware");
-  // const DashboardPlugin = require("webpack-dashboard/plugin");
+import webpack from "webpack";
+import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackHotMiddleware from "webpack-hot-middleware";
+import config from "../../webpack/webpack.dev.config";
 
-  const config = require("../../webpack/webpack.dev.config");
-
-  const compiler = webpack(config);
-
-  // compiler.apply(new DashboardPlugin());
-
-  const devMiddleware = webpackDevMiddleware(compiler, {
+const compiler = webpack(config);
+const devEnv = process.env.NODE_ENV !== "production";
+const devMiddleware = devEnv
+  ? webpackDevMiddleware(compiler, {
     contentBase: "build",
     stats: { colors: true },
-  });
+  })
+  : {};
 
-  const hotMiddleware = webpackHotMiddleware(compiler);
+const hotMiddleware = devEnv
+  ? webpackHotMiddleware(compiler)
+  : {};
 
-  module.exports = {
-    devMiddleware,
-    hotMiddleware,
-  };
-}
+export {
+  devMiddleware,
+  hotMiddleware,
+};

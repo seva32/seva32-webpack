@@ -1,4 +1,4 @@
-const morgan = require("morgan");
+import morgan from "morgan";
 
 function logger(...args) {
   if (process.env.NODE_ENV === "production") {
@@ -8,4 +8,4 @@ function logger(...args) {
   }
 }
 
-module.exports = logger;
+export default logger;

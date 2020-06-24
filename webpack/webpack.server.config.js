@@ -1,11 +1,11 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpack = require("webpack");
-const config = require("./webpack.config");
+import path from "path";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import webpack from "webpack";
+import config from "./webpack.config.babel";
 
 const devMode = process.env.NODE_ENV !== "production";
 
-module.exports = {
+export default {
   devtool: "inline-source-map",
 
   target: "node",

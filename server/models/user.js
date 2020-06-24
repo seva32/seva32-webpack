@@ -1,10 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable func-names */
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 // eslint-disable-next-line prefer-destructuring
 const Schema = mongoose.Schema;
 mongoose.set("useCreateIndex", true);
-const bcrypt = require("bcrypt");
 
 // define model
 const userSchema = new Schema({
@@ -37,4 +37,4 @@ userSchema.methods.comparePassword = function (candidatePass, cb) {
 const ModelClass = mongoose.model("user", userSchema);
 
 // export model
-module.exports = ModelClass;
+export default ModelClass;

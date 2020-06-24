@@ -1,10 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line object-curly-newline
-require("@babel/register")({
-  presets: ["@babel/preset-env", "@babel/preset-react"],
-});
+// require("@babel/register")({
+//   presets: ["@babel/preset-env", "@babel/preset-react"],
+// });
 
-const { AppProvider, useAppContext } = require("../../src/context/index");
+import { AppProvider, useAppContext } from "../../src/context/index";
 
-module.exports = { AppProvider, useAppContext };
+export default { AppProvider, useAppContext };

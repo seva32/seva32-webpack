@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
-const React = require("react");
-const Loadable = require("react-loadable");
+import React from "react";
+import Loadable from "react-loadable";
 
 const modules = new Set();
 
@@ -13,4 +13,4 @@ function appWrapp(props) {
   );
 }
 
-module.exports = { modules, appWrapp };
+export { modules, appWrapp };

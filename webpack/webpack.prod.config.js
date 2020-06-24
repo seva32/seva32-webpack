@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const config = require("./webpack.config");
+import path from "path";
+import HTMLWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import config from "./webpack.config.babel";
 
-// const devMode = process.env.NODE_ENV !== "production";
+// import devMode = process.env.NODE_ENV !== "production;
 
-module.exports = {
+export default {
   devtool: "source-map",
 
   entry: config.entry,
