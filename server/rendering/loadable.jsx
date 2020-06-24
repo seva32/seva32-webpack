@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 const React = require("react");
 const Loadable = require("react-loadable");
 
-let modules = new Set();
+const modules = new Set();
 
 function appWrapp(props) {
   return (

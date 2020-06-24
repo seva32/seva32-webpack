@@ -9,12 +9,12 @@ const { createStore } = require("redux");
 const { Provider } = require("react-redux");
 const { CookiesProvider } = require("react-cookie");
 const serialize = require("serialize-javascript");
+const { getBundles } = require("react-loadable-ssr-addon");
 const { devMiddleware } = require("../middleware/webpack");
 const { appWrapp: HelmetProvider, helmetContext } = require("./helmet.jsx");
 const { appWrapp: LoadableCapture, modules } = require("./loadable.jsx");
 // const { getBundles } = require("react-loadable/webpack");
 // const stats = require("../../build/react-loadable.json");
-const { getBundles } = require("react-loadable-ssr-addon");
 const manifest = require("../../build/react-loadable-ssr-addon.json");
 
 function getTemplate() {
@@ -98,17 +98,13 @@ function render(req, res, preloadedState, routeData) {
     .replace(
       "</head>",
       `${styles
-        .map((style) => {
-          return `<link href="/dist/${style.file}" rel="stylesheet" />`;
-        })
+        .map((style) => `<link href="/dist/${style.file}" rel="stylesheet" />`)
         .join("\n")}</head>`
     )
     .replace(
       "</body>",
       `${scripts
-        .map((script) => {
-          return `<script src="/dist/${script.file}"></script>`;
-        })
+        .map((script) => `<script src="/dist/${script.file}"></script>`)
         .join("\n")}</body>`
     );
 
