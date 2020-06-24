@@ -1,10 +1,12 @@
-require("dotenv").config({ silent: true });
+import dotenv from "dotenv";
 
-const webpack = require("webpack");
-const path = require("path");
-const ReactLoadableSSRAddon = require("react-loadable-ssr-addon");
+import webpack from "webpack";
+import path from "path";
+import ReactLoadableSSRAddon from "react-loadable-ssr-addon";
 
-module.exports = {
+dotenv.config({ silent: true });
+
+export default {
   entry: {
     vendor: ["semantic-ui-react"],
     app: [path.resolve("src/index.jsx")],

@@ -1,15 +1,17 @@
-require("dotenv").config({ silent: true });
+/* eslint-disable no-console */
+import dotenv from "dotenv";
+import express from "express";
+import cookiesMiddleware from "universal-cookie-express";
+import compression from "compression";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import cors from "cors";
+import Loadable from "react-loadable";
+import logger from "./middleware/logger";
+import { devMiddleware, hotMiddleware } from "./middleware/webpack";
+import router from "./router/router";
 
-const express = require("express");
-const cookiesMiddleware = require("universal-cookie-express");
-const compression = require("compression");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const Loadable = require("react-loadable");
-const logger = require("./middleware/logger");
-const { devMiddleware, hotMiddleware } = require("./middleware/webpack");
-const router = require("./router/router");
+dotenv.config({ silent: true });
 
 mongoose.connect(process.env.MONGOOSE, {
   useNewUrlParser: true,

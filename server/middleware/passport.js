@@ -2,14 +2,15 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable object-shorthand */
 /* eslint-disable consistent-return */
-const passport = require("passport");
-const JwtStrategy = require("passport-jwt").Strategy;
-// eslint-disable-next-line prefer-destructuring
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-const LocalStrategy = require("passport-local");
+import passport from "passport";
+import passportJwt from "passport-jwt";
+import LocalStrategy from "passport-local";
+import config from "../contollers/config";
+import User from "../models/user";
 
-const config = require("../contollers/config");
-const User = require("../models/user");
+const JwtStrategy = passportJwt.Strategy;
+const { ExtractJwt } = passportJwt;
+
 // 1) setup options for jwt strategy, asi passport sabe de donde sacar la info para procesar el token
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

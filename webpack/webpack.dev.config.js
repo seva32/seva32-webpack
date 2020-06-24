@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const webpack = require("webpack");
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const config = require("./webpack.config");
+import webpack from "webpack";
+import path from "path";
+import HTMLWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import config from "./webpack.config.babel";
 
-module.exports = {
+export default {
   devtool: "inline-source-map",
 
   entry: {

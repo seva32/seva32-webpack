@@ -1,21 +1,20 @@
-const fs = require("fs");
+/* eslint-disable import/extensions */
+import fs from "fs";
 // eslint-disable-next-line import/no-extraneous-dependencies
-const path = require("path");
-require("@babel/register");
-const React = require("react");
-const ReactDOMServer = require("react-dom/server");
-const { StaticRouter } = require("react-router-dom");
-const { createStore } = require("redux");
-const { Provider } = require("react-redux");
-const { CookiesProvider } = require("react-cookie");
-const serialize = require("serialize-javascript");
-const { getBundles } = require("react-loadable-ssr-addon");
-const { devMiddleware } = require("../middleware/webpack");
-const { appWrapp: HelmetProvider, helmetContext } = require("./helmet.jsx");
-const { appWrapp: LoadableCapture, modules } = require("./loadable.jsx");
-// const { getBundles } = require("react-loadable/webpack");
-// const stats = require("../../build/react-loadable.json");
-const manifest = require("../../build/react-loadable-ssr-addon.json");
+import path from "path";
+// require("@babel/register");
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
+import serialize from "serialize-javascript";
+import { getBundles } from "react-loadable-ssr-addon";
+import { devMiddleware } from "../middleware/webpack";
+import { appWrapp as HelmetProvider, helmetContext } from "./helmet.jsx";
+import { appWrapp as LoadableCapture, modules } from "./loadable.jsx";
+import manifest from "../../build/react-loadable-ssr-addon.json";
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -115,4 +114,4 @@ function render(req, res, preloadedState, routeData) {
   }
 }
 
-module.exports = render;
+export default render;

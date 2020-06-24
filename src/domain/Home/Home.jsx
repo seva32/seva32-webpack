@@ -15,7 +15,7 @@ const Home = () => (
       <title>Home</title>
       <link rel="canonical" href="https://www.example.com/" />
     </Helmet>
-    <h1 className={styles.red}>Home</h1>
+    <h1 className={styles.red}>Home Screen</h1>
     <Styles.StyledContainer>
       <FormUI />
     </Styles.StyledContainer>
