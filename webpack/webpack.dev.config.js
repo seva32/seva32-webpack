@@ -34,7 +34,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new HTMLWebpackPlugin({
       template: path.resolve("src/index.html"),
-      minify: { collapseWhitespace: true },
+      minify: { collapseWhitespace: false },
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
@@ -45,11 +45,6 @@ module.exports = {
 
   module: {
     rules: [
-      // {
-      //   test: /\.jsx?$/,
-      //   exclude: /node_modules/,
-      //   use: ["babel-loader", "react-hot-loader/webpack"],
-      // },
       {
         enforce: "pre",
         test: /\.(js|jsx)$/i,
