@@ -5,8 +5,8 @@ const { HelmetProvider } = require("react-helmet-async");
 
 const helmetContext = {};
 
-function appWrapp(props) {
-  return <HelmetProvider context={helmetContext} {...props.children} />;
+function appWrapp() {
+  return <HelmetProvider context={helmetContext} />;
 }
 
 module.exports = { helmetContext, appWrapp };
