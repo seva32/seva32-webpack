@@ -1,20 +1,17 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import styles from "./home.scss";
 
 import { Layout } from "../Layout";
 import { FormUI } from "../../components";
+import Head from "../../components/Head";
 import * as Styles from "./Home.style";
 
 // eslint-disable-next-line react/prop-types
 const Home = () => (
   <Layout>
-    <Helmet>
-      <title>Home</title>
-      <link rel="canonical" href="https://www.example.com/" />
-    </Helmet>
+    <Head title="Home" />
     <h1 className={styles.red}>Home Screen</h1>
     <Styles.StyledContainer>
       <FormUI />
