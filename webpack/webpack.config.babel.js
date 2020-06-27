@@ -8,7 +8,7 @@ dotenv.config({ silent: true });
 
 export default {
   entry: {
-    vendor: ["semantic-ui-react"],
+    vendor: ["semantic-ui-react", "styled-components"],
     app: [path.resolve("src/index.jsx")],
   },
 
@@ -23,16 +23,6 @@ export default {
   resolve: {
     extensions: [".js", ".jsx", ".scss"],
   },
-
-  // plugins: [
-  //   new webpack.EnvironmentPlugin({
-  //     NODE_ENV: "development", // use 'development' unless process.env.NODE_ENV is defined
-  //     DEBUG: false,
-  //   }),
-  //   new ReactLoadablePlugin({
-  //     filename: "build/react-loadable.json",
-  //   }),
-  // ],
 
   module: {
     rules: [
@@ -65,29 +55,16 @@ export default {
       },
     ],
   },
-  optimization: {
-    nodeEnv: "development",
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          chunks: "all",
-          minChunks: 2,
-        },
-        default: {
-          minChunks: 2,
-          reuseExistingChunk: true,
-        },
-      },
-    },
-  },
+
   plugins: [
     new ReactLoadableSSRAddon({
       filename: "react-loadable-ssr-addon.json",
     }),
     new webpack.DefinePlugin({
       "process.env.BROWSER": JSON.stringify(true),
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 5,
     }),
   ],
 };

@@ -11,23 +11,11 @@ export default {
 
   entry: config.entry,
 
-  resolve: config.resolve,
-
   output: config.output,
 
   mode: "production",
 
-  plugins: [
-    new HTMLWebpackPlugin({
-      template: path.resolve("src/index.html"),
-      minify: { collapseWhitespace: true },
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].[hash].css",
-      chunkFilename: "[id].[hash].css",
-    }),
-    ...config.plugins,
-  ],
+  resolve: config.resolve,
 
   module: {
     rules: [
@@ -61,9 +49,6 @@ export default {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: process.env.NODE_ENV === "development",
-            },
           },
           {
             loader: "css-loader",
@@ -86,22 +71,39 @@ export default {
       ...config.module.rules,
     ],
   },
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       styles: {
-  //         name: "styles",
-  //         test: /\.css$/,
-  //         chunks: "all",
-  //         enforce: true,
-  //       },
-  //       vendor: {
-  //         chunks: "initial",
-  //         test: "vendor",
-  //         name: "vendor",
-  //         enforce: true,
-  //       },
-  //     },
-  //   },
-  // },
+
+  plugins: [
+    new HTMLWebpackPlugin({
+      template: path.resolve("src/index.html"),
+      minify: { collapseWhitespace: true },
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[hash].css",
+      chunkFilename: "[id].[hash].css",
+    }),
+    ...config.plugins,
+  ],
+
+  performance: {
+    hints: false,
+  },
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true,
+        },
+        vendor: {
+          chunks: "initial",
+          test: "vendor",
+          name: "vendor",
+          enforce: true,
+        },
+      },
+    },
+  },
 };
