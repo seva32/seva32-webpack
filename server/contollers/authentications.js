@@ -48,3 +48,8 @@ export const signin = (req, res, next) => {
   // user ya paso email y pass auth, doy token, ya tengo al user en req.user xq passport lo agrega al pasar por done(null, user);
   res.send({ token: tokenForUser(req.user) });
 };
+
+export const logger = (req, res, next) => {
+  console.log(req);
+  next();
+};

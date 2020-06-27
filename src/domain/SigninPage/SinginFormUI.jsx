@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -17,9 +18,46 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import imagePath from "../../assets/images/logo192.png";
 import { Layout } from "../Layout";
+import { GoogleLogin } from "../../components/GoogleButton";
 import * as actions from "../../actions";
 
 const SigninFormUI = ({ error, signin, history }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [showButton, toggleShow] = useState(true);
+
+  // eslint-disable-next-line max-len
+  const renderGoogleAuth = () => ((showButton || error) && (
+  <GoogleLogin
+    onSuccess={(res) => {
+          if (res.Qt.Au && res.googleId) {
+            toggleShow(false);
+            signin(
+              {
+                email: res.Qt.Au,
+                password: res.googleId,
+              },
+              () => {
+                history.push("/");
+              }
+            );
+          }
+        }}
+    onFailure={(_res) => (
+      <Message negative>
+        <Message.Header>
+          There was a problem trying to signin with Google
+        </Message.Header>
+        <p>Try again or use another method</p>
+      </Message>
+        )}
+        // eslint-disable-next-line max-len
+    clientId="337014600692-84c6cvbn4370f08b6cdp8jkc2ndjln84.apps.googleusercontent.com"
+  >
+    Signin
+  </GoogleLogin>
+    ))
+    || null;
+
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -38,17 +76,25 @@ const SigninFormUI = ({ error, signin, history }) => {
         history.push("/");
       });
       resetForm({});
-      setStatus({ success: true });
+      setStatus({
+        success: true,
+      });
     },
   });
   return (
     <Layout>
       <Grid
         textAlign="center"
-        style={{ height: "100vh" }}
+        style={{
+          height: "100vh",
+        }}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: 450 }}>
+        <Grid.Column
+          style={{
+            maxWidth: 450,
+          }}
+        >
           <Header as="h2" color="teal" textAlign="center">
             <Image src={imagePath} alt="No logo image" />
             Log-in to your account
@@ -101,10 +147,19 @@ const SigninFormUI = ({ error, signin, history }) => {
               </Button>
             </Segment>
           </Form>
+
+          <Message>Singin with Google {renderGoogleAuth()}</Message>
+
+          {error && (
+            <Message negative>
+              <Message.Header>{`You couldnt signin: ${error}`}</Message.Header>
+              <p>Try again</p>
+            </Message>
+          )}
+
           <Message>
             New to us? <Link to="/signup">Sign Up</Link>
           </Message>
-          {error || "No errors yet"}
         </Grid.Column>
       </Grid>
     </Layout>

@@ -14,6 +14,15 @@ export const signup = (formProps, callback) => async (dispatch) => {
 
 export const signout = () => (dispatch) => {
   localStorage.removeItem("token");
+  if (window.gapi) {
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    if (auth2 != null) {
+      auth2.signOut().then(auth2.disconnect().then(() => {
+        // eslint-disable-next-line no-console
+        console.log("Exited from google...");
+      }));
+    }
+  }
   dispatch({ type: AUTH_USER, payload: "" });
   dispatch({ type: AUTH_ERROR, payload: "" });
 };
