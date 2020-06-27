@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -18,9 +18,44 @@ import { omit } from "lodash";
 import PropTypes from "prop-types";
 import imagePath from "../../assets/images/logo192.png";
 import { Layout } from "../Layout";
+import { GoogleLogin } from "../../components/GoogleButton";
 import * as actions from "../../actions";
 
 const SignupFormUI = ({ error, signup, history }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [showButton, toggleShow] = useState(true);
+
+  const renderGoogleAuth = () => (
+      ((showButton || error) && (
+        <GoogleLogin
+          onSuccess={(res) => {
+            if (res.Qt.Au && res.googleId) {
+              toggleShow(false);
+              signup(
+                {
+                  email: res.Qt.Au,
+                  password: res.googleId,
+                },
+                () => {
+                  history.push("/");
+                }
+              );
+            }
+          }}
+          onFailure={(_res) => (
+            <Message negative>
+              <Message.Header>
+                There was a problem trying to signup with Google
+              </Message.Header>
+              <p>Try again or use another method</p>
+            </Message>
+            )}
+          // eslint-disable-next-line max-len
+          clientId="337014600692-84c6cvbn4370f08b6cdp8jkc2ndjln84.apps.googleusercontent.com"
+        >
+          Singup
+        </GoogleLogin>
+      )) || null);
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -130,10 +165,19 @@ const SignupFormUI = ({ error, signup, history }) => {
               </Button>
             </Segment>
           </Form>
+
+          <Message>Sing up with Google {renderGoogleAuth()}</Message>
+
+          {error && (
+            <Message negative>
+              <Message.Header>{`You couldnt signup: ${error}`}</Message.Header>
+              <p>Try again</p>
+            </Message>
+          )}
+
           <Message>
             Already have an account? <Link to="/signin">Sign In</Link>
           </Message>
-          {error || "No errors yet"}
         </Grid.Column>
       </Grid>
     </Layout>

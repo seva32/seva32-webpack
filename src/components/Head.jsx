@@ -8,7 +8,7 @@ const Head = ({ title }) => (
     <meta property="og:title" content="SSR Daily News - ilker ALTIN" />
     <meta
       name="description"
-      content="Breaking news,latest articles, popular articles from most popular news websites of the world"
+      content="Breaking news,latest articles, popular articles"
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://sebastianfantini.com" />

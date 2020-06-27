@@ -45,7 +45,7 @@ router(app);
 
 Loadable.preloadAll()
   .then(() => {
-    const server = app.listen(process.env.PORT || 8080, () => {
+    const server = app.listen(process.env.PORT, () => {
       console.log(
         "Express started at http://localhost:%d\n",
         server.address().port
