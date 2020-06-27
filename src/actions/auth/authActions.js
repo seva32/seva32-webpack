@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_USER, AUTH_ERROR } from "./authActionTypes";
+import { AUTH_USER, AUTH_ERROR_SIGNUP, AUTH_ERROR_SIGNIN } from "./authActionTypes";
 // formProps = { email, password }
 export const signup = (formProps, callback) => async (dispatch) => {
   try {
@@ -8,7 +8,7 @@ export const signup = (formProps, callback) => async (dispatch) => {
     localStorage.setItem("token", response.data.token);
     callback();
   } catch (e) {
-    dispatch({ type: AUTH_ERROR, payload: "Email in use" });
+    dispatch({ type: AUTH_ERROR_SIGNUP, payload: "Email in use" });
   }
 };
 
@@ -24,7 +24,8 @@ export const signout = () => (dispatch) => {
     }
   }
   dispatch({ type: AUTH_USER, payload: "" });
-  dispatch({ type: AUTH_ERROR, payload: "" });
+  dispatch({ type: AUTH_ERROR_SIGNUP, payload: "" });
+  dispatch({ type: AUTH_ERROR_SIGNIN, payload: "" });
 };
 
 export const signin = (formProps, callback) => async (dispatch) => {
@@ -34,6 +35,6 @@ export const signin = (formProps, callback) => async (dispatch) => {
     localStorage.setItem("token", response.data.token);
     callback();
   } catch (e) {
-    dispatch({ type: AUTH_ERROR, payload: "Invalid login credentials" });
+    dispatch({ type: AUTH_ERROR_SIGNIN, payload: "Invalid login credentials" });
   }
 };
