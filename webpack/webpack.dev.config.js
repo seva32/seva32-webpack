@@ -16,6 +16,10 @@ export default {
     ],
   },
 
+  output: config.output,
+
+  mode: "development",
+
   resolve: {
     alias: {
       "react-dom": "@hot-loader/react-dom",
@@ -24,24 +28,6 @@ export default {
     },
     ...config.resolve,
   },
-
-  output: config.output,
-
-  mode: "development",
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new HTMLWebpackPlugin({
-      template: path.resolve("src/index.html"),
-      minify: { collapseWhitespace: false },
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
-    }),
-    ...config.plugins,
-  ],
 
   module: {
     rules: [
@@ -115,5 +101,36 @@ export default {
       },
       ...config.module.rules,
     ],
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new HTMLWebpackPlugin({
+      template: path.resolve("src/index.html"),
+      minify: { collapseWhitespace: false },
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
+    ...config.plugins,
+  ],
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+          minChunks: 2,
+        },
+        default: {
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
 };

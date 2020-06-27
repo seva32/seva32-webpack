@@ -1,6 +1,6 @@
 import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import webpack from "webpack";
+// import webpack from "webpack";
 import config from "./webpack.config.babel";
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -15,28 +15,17 @@ export default {
     rootReducer: path.resolve("src/reducers/index"),
   },
 
-  mode: devMode ? "development" : "production",
-
-  resolve: config.resolve,
-
   output: {
     ...config.output,
     filename: "[name].server.js",
     libraryTarget: "commonjs",
   },
 
-  externals: ["react-helmet-async"],
+  mode: devMode ? "development" : "production",
 
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: devMode ? "[name].css" : "[name].[hash].css",
-      chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
-    }),
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1,
-    }),
-    ...config.plugins,
-  ],
+  resolve: config.resolve,
+
+  externals: ["react-helmet-async"],
 
   module: {
     rules: [
@@ -72,4 +61,12 @@ export default {
       ...config.module.rules,
     ],
   },
+
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: devMode ? "[name].css" : "[name].[hash].css",
+      chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
+    }),
+    ...config.plugins,
+  ],
 };
