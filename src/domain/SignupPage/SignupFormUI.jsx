@@ -197,7 +197,7 @@ SignupFormUI.defaultProps = {
 
 export default connect(
   ({ auth }) => ({
-    error: auth.errorMessage,
+    error: auth.errorMessageSignUp,
   }),
   actions
 )(SignupFormUI);

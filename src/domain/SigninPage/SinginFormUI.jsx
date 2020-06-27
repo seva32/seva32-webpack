@@ -179,7 +179,7 @@ SigninFormUI.defaultProps = {
 
 export default connect(
   ({ auth }) => ({
-    error: auth.errorMessage,
+    error: auth.errorMessageSignIn,
   }),
   actions
 )(SigninFormUI);
