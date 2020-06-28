@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import webpack from "webpack";
 import path from "path";
 import ReactLoadableSSRAddon from "react-loadable-ssr-addon";
+import { DuplicatesPlugin } from "inspectpack/plugin";
 
 dotenv.config({ silent: true });
 
@@ -65,6 +66,10 @@ export default {
     }),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 5,
+    }),
+    new DuplicatesPlugin({
+      emitErrors: false,
+      verbose: true,
     }),
   ],
 };

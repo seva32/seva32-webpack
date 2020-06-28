@@ -14,7 +14,7 @@ export const signup = (formProps, callback) => async (dispatch) => {
 
 export const signout = () => (dispatch) => {
   localStorage.removeItem("token");
-  if (window.gapi) {
+  if (typeof window !== "undefined" && window.gapi) {
     const auth2 = window.gapi.auth2.getAuthInstance();
     if (auth2 != null) {
       auth2.signOut().then(auth2.disconnect().then(() => {

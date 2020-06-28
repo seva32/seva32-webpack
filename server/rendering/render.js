@@ -1,8 +1,7 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
 import fs from "fs";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import path from "path";
-// require("@babel/register");
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
@@ -42,6 +41,13 @@ function render(req, res, preloadedState, routeData) {
 
   const template = getTemplate();
 
+  // const algo = ReactDOMServer.renderToString(React.createElement(App));
+
+  // console.log(
+  //   "###########",
+  //   algo
+  // );
+
   const body = ReactDOMServer.renderToString(
     React.createElement(
       LoadableCapture,
@@ -79,7 +85,7 @@ function render(req, res, preloadedState, routeData) {
   const scripts = bundles.js || [];
 
   // const stylesTags = styles.map(style => {
-  //         return `<link href="/dist/${style.file}" rel="stylesheet" />`;
+  //         return `<link href="../${style.file}" rel="stylesheet" />`;
   //       }).join('\n');
 
   const html = template
@@ -97,13 +103,15 @@ function render(req, res, preloadedState, routeData) {
     .replace(
       "</head>",
       `${styles
-        .map((style) => `<link href="/dist/${style.file}" rel="stylesheet" />`)
+        .map((style) => `<link href="/${style.file}" rel="stylesheet" />`)
         .join("\n")}</head>`
     )
     .replace(
       "</body>",
       `${scripts
-        .map((script) => `<script src="/dist/${script.file}"></script>`)
+        .map(
+          (script) => `<script type="text/babel" src="/${script.file}"></script>`
+        )
         .join("\n")}</body>`
     );
 
