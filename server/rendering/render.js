@@ -29,6 +29,7 @@ function getTemplate() {
 function render(req, res, preloadedState, routeData) {
   const context = { data: routeData };
 
+  // eslint-disable-next-line no-unused-vars
   const { default: App } = require("../../build/app.server");
   const { default: rootReducer } = require("../../build/rootReducer.server");
 
@@ -64,7 +65,7 @@ function render(req, res, preloadedState, routeData) {
             React.createElement(
               StaticRouter,
               { location: req.url, context },
-              React.createElement(App)
+              React.createElement(<div>Hola</div>)
             )
           )
         )
