@@ -1,12 +1,12 @@
 import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-// import webpack from "webpack";
+import webpack from "webpack";
 import config from "./webpack.config.babel";
 
 const devMode = process.env.NODE_ENV !== "production";
 
 export default {
-  devtool: "inline-source-map",
+  devtool: "source-map",
 
   target: "node",
 
@@ -18,10 +18,10 @@ export default {
   output: {
     ...config.output,
     filename: "[name].server.js",
-    libraryTarget: "commonjs",
+    libraryTarget: "umd",
   },
 
-  mode: devMode ? "development" : "production",
+  mode: "production",
 
   resolve: config.resolve,
 
@@ -66,6 +66,11 @@ export default {
     new MiniCssExtractPlugin({
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
+    }),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true,
+      entryOnly: false
     }),
     ...config.plugins,
   ],

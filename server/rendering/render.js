@@ -14,6 +14,7 @@ import { devMiddleware } from "../middleware/webpack";
 import { appWrapp as HelmetProvider, helmetContext } from "./helmet.jsx";
 import { appWrapp as LoadableCapture, modules } from "./loadable.jsx";
 import manifest from "../../build/react-loadable-ssr-addon.json";
+// import App from "../../src/App";
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -42,13 +43,6 @@ function render(req, res, preloadedState, routeData) {
 
   const template = getTemplate();
 
-  // const algo = ReactDOMServer.renderToString(React.createElement(App));
-
-  // console.log(
-  //   "###########",
-  //   algo
-  // );
-
   const body = ReactDOMServer.renderToString(
     React.createElement(
       LoadableCapture,
@@ -65,13 +59,15 @@ function render(req, res, preloadedState, routeData) {
             React.createElement(
               StaticRouter,
               { location: req.url, context },
-              React.createElement(<div>Hola</div>)
+              React.createElement(App)
             )
           )
         )
       )
     )
   );
+
+  // const body = "";
 
   const { helmet } = helmetContext;
 
@@ -84,10 +80,6 @@ function render(req, res, preloadedState, routeData) {
 
   const styles = bundles.css || [];
   const scripts = bundles.js || [];
-
-  // const stylesTags = styles.map(style => {
-  //         return `<link href="../${style.file}" rel="stylesheet" />`;
-  //       }).join('\n');
 
   const html = template
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`)

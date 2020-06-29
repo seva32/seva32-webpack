@@ -24,5 +24,6 @@ require("@babel/polyfill");
 global.Promise = require("bluebird");
 
 require.extensions[".svg"] = () => {};
+require.extensions[".png"] = () => {};
 
 require("./server.js");
