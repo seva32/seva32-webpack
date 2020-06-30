@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Loadable from "react-loadable";
 
+import Router from "./Router";
 import { Home } from "./domain/Home";
 import { Posts } from "./domain/Posts";
 // import { Todos } from "./domain/Todos";
@@ -12,6 +13,7 @@ import { SigninFormUI } from "./domain/SigninPage";
 import { SignupFormUI } from "./domain/SignupPage";
 import { Signout } from "./domain/SignoutPage";
 import Loading from "./components/Loading";
+import Test from "./domain/Test/Test";
 
 if (!process.env.BROWSER) {
   global.window = {};
@@ -22,8 +24,9 @@ const LoadableTodos = Loadable({
   loading: Loading,
 });
 
-const App = () => (
-  <>
+// eslint-disable-next-line react/prop-types
+const App = ({ ssrLocation }) => (
+  <Router ssrLocation={ssrLocation}>
     <ErrorBoundary>
       <Switch>
         <Route exact path="/">
@@ -33,12 +36,13 @@ const App = () => (
         <Route exact path="/signup" component={SignupFormUI} />
         <Route exact path="/signout" component={Signout} />
         <Route path="/posts" component={Posts} />
+        <Route path="/test" component={Test} />
         <Route path="/todos" component={LoadableTodos} />
         <RedirectWithStatus status={301} from="/home" to="/" />
         <Route component={NotFound} />
       </Switch>
     </ErrorBoundary>
-  </>
+  </Router>
 );
 
 export default App;

@@ -5,7 +5,6 @@ import "regenerator-runtime/runtime";
 import { AppContainer } from "react-hot-loader";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "styled-components";
@@ -30,9 +29,7 @@ function render(Root) {
             <AppProvider>
               <HelmetProvider>
                 <CookiesProvider>
-                  <BrowserRouter>
-                    <Root />
-                  </BrowserRouter>
+                  <Root />
                 </CookiesProvider>
               </HelmetProvider>
             </AppProvider>

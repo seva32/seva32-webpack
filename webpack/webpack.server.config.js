@@ -1,6 +1,6 @@
 import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import webpack from "webpack";
+// import webpack from "webpack";
 import config from "./webpack.config.babel";
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -11,21 +11,21 @@ export default {
   target: "node",
 
   entry: {
-    app: path.resolve("src/App"),
+    // app: path.resolve("src/App"),
     rootReducer: path.resolve("src/reducers/index"),
   },
 
   output: {
     ...config.output,
     filename: "[name].server.js",
-    libraryTarget: "umd",
+    libraryTarget: "commonjs",
   },
 
-  mode: "production",
+  mode: devMode ? "development" : "production",
 
   resolve: config.resolve,
 
-  externals: ["react-helmet-async"],
+  // externals: ["react-helmet-async"],
 
   module: {
     rules: [
@@ -66,11 +66,6 @@ export default {
     new MiniCssExtractPlugin({
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
-    }),
-    new webpack.BannerPlugin({
-      banner: 'require("source-map-support").install();',
-      raw: true,
-      entryOnly: false
     }),
     ...config.plugins,
   ],

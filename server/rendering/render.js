@@ -3,18 +3,20 @@
 import fs from "fs";
 import path from "path";
 import React from "react";
+import Transmit from "react-transmit";
 import ReactDOMServer from "react-dom/server";
-import { StaticRouter } from "react-router-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import serialize from "serialize-javascript";
 import { getBundles } from "react-loadable-ssr-addon";
+import Loadable from "react-loadable";
+import { HelmetProvider } from "react-helmet-async";
 import { devMiddleware } from "../middleware/webpack";
-import { appWrapp as HelmetProvider, helmetContext } from "./helmet.jsx";
-import { appWrapp as LoadableCapture, modules } from "./loadable.jsx";
+// import { appWrapp as HelmetProvider, helmetContext } from "./helmet.jsx";
+// import { appWrapp as LoadableCapture, modules } from "./loadable.jsx";
 import manifest from "../../build/react-loadable-ssr-addon.json";
-// import App from "../../src/App";
+import App from "../../src/App";
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -31,11 +33,11 @@ function render(req, res, preloadedState, routeData) {
   const context = { data: routeData };
 
   // eslint-disable-next-line no-unused-vars
-  const { default: App } = require("../../build/app.server");
+  // const { default: App } = require("../../build/app.server");
   const { default: rootReducer } = require("../../build/rootReducer.server");
 
   if (process.env.NODE_ENV !== "production") {
-    delete require.cache[require.resolve("../../build/app.server")];
+    // delete require.cache[require.resolve("../../build/app.server")];
     delete require.cache[require.resolve("../../build/rootReducer.server")];
   }
 
@@ -43,33 +45,51 @@ function render(req, res, preloadedState, routeData) {
 
   const template = getTemplate();
 
+  const modules = [];
+
+  const helmetContext = {};
+
   const body = ReactDOMServer.renderToString(
-    React.createElement(
-      LoadableCapture,
-      {},
-      React.createElement(
-        HelmetProvider,
-        {},
-        React.createElement(
-          Provider,
-          { store },
-          React.createElement(
-            CookiesProvider,
-            { cookies: req.universalCookies },
-            React.createElement(
-              StaticRouter,
-              { location: req.url, context },
-              React.createElement(App)
-            )
-          )
-        )
-      )
-    )
-  );
+    <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+      <HelmetProvider context={helmetContext}>
+        <Provider store={store}>
+          <CookiesProvider cookies={req.universalCookies}>
+            <App ssrLocation={req.url} context={context} />
+          </CookiesProvider>
+        </Provider>
+      </HelmetProvider>
+    </Loadable.Capture>
+  );// .then(({ reactString }) => {
+    // const body = ReactDOMServer.renderToNodeStream(
+    //   React.createElement(
+    //     LoadableCapture,
+    //     {},
+    //     React.createElement(
+    //       HelmetProvider,
+    //       {},
+    //       React.createElement(
+    //         Provider,
+    //         { store },
+    //         React.createElement(
+    //           CookiesProvider,
+    //           { cookies: req.universalCookies },
+    //           React.createElement(
+    //             StaticRouter,
+    //             { location: req.url, context },
+    //             React.createElement(App)
+    //           )
+    //         )
+    //       )
+    //     )
+    //   )
+    // );
 
   // const body = "";
 
   const { helmet } = helmetContext;
+
+  console.log("Helmet: =========", helmet.link.toString());
+  console.log("Helmet: =========", helmet.title.toString());
 
   const finalState = store.getState();
 
@@ -109,10 +129,29 @@ function render(req, res, preloadedState, routeData) {
     );
 
   if (context.url) {
+    console.log("**********");
     res.redirect(context.status, context.url);
   } else {
+    //   res.write(html);
+    //   console.log("HTML: ", html);
+    //   console.log("URL: ", req.url);
+    //   body.pipe(res, { end: false });
+
+    //   const htmlEnd = `</div>
+    //   <script src="/app.server.js"></script>
+    // </body>
+    // </html>`;
+
+    //   body.on("end", () => {
+    //     console.log("(((((((((((END)))))))))))");
+    //     res.write(htmlEnd);
+    //     res.status(context.status || 200);
+    //     res.end();
+    //   });
+    console.log("**********", html);
     res.status(context.status || 200).send(html);
   }
+  // });
 }
 
 export default render;
