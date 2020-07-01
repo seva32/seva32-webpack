@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import path from "path";
 import HTMLWebpackPlugin from "html-webpack-plugin";
+import HtmlWebpackPrerenderPlugin from "html-webpack-prerender-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import config from "./webpack.config.babel";
 
@@ -77,6 +78,7 @@ export default {
       template: path.resolve("src/index.html"),
       minify: { collapseWhitespace: true },
     }),
+    new HtmlWebpackPrerenderPlugin({ main: "#root" }),
     new MiniCssExtractPlugin({
       filename: "[name].[hash].css",
       chunkFilename: "[id].[hash].css",

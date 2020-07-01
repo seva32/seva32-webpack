@@ -26,20 +26,16 @@ app.use(compression());
 app.use(logger);
 app.use(bodyParser.json({ type: "*/*" }));
 app.use(cors());
+app.use(cookiesMiddleware());
 
 if (process.env.NODE_ENV === "production") {
   app.use(
-    express.static("build", {
-      index: false,
-      // etag: false
-    })
+    express.static("build")
   );
 } else {
   app.use(devMiddleware);
   app.use(hotMiddleware);
 }
-
-app.use(cookiesMiddleware());
 
 router(app);
 

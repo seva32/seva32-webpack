@@ -5,9 +5,6 @@ import passportConfig from "../middleware/passport";
 import loadData from "../../src/utils/fetch/requireLoadData";
 import render from "../rendering/render";
 
-// creo un obj para indicar que uso jwt y no cookies que es default de passport
-// const requireAuth = passport.authenticate("jwt", { session: false });
-
 // uso local strategy porque me llega email y pass
 const requireSignin = passport.authenticate("local", {
   session: false,

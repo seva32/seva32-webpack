@@ -2,6 +2,8 @@
 import webpack from "webpack";
 import path from "path";
 import HTMLWebpackPlugin from "html-webpack-plugin";
+import HtmlWebpackPrerenderPlugin from "html-webpack-prerender-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import config from "./webpack.config.babel";
 
@@ -110,10 +112,12 @@ export default {
       template: path.resolve("src/index.html"),
       minify: { collapseWhitespace: false },
     }),
+    new HtmlWebpackPrerenderPlugin({ main: "#root" }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
+    new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["build"] }),
     ...config.plugins,
   ],
 

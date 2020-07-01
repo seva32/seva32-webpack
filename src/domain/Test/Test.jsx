@@ -1,11 +1,11 @@
 import React from "react";
-import Head from "../../components/Head";
+// import Head from "../../components/Head";
 
 function Test() {
   return (
     <div>
-      <Head title="test" />
-      <h1>Test works again with nodemon!</h1>
+      {/* <Head title="test" /> */}
+      <h1>Test works again with fuck you too!</h1>
     </div>
   );
 }

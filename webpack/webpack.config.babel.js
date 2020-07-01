@@ -9,7 +9,7 @@ dotenv.config({ silent: true });
 
 export default {
   entry: {
-    vendor: ["semantic-ui-react", "styled-components"],
+    vendor: ["semantic-ui-react", "styled-components", "react", "react-dom"],
     app: [path.resolve("src/index.jsx")],
   },
 

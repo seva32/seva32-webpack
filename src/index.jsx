@@ -17,7 +17,7 @@ import Store from "./store";
 import rootReducer from "./reducers";
 import { theme } from "./utils/styles/theme";
 import { GlobalStyle } from "./utils/styles/global";
-import { AppProvider } from "./context";
+// import { AppProvider } from "./context";
 
 function render(Root) {
   ReactDOM.hydrate(
@@ -26,13 +26,13 @@ function render(Root) {
         <GlobalStyle />
         <Provider store={Store.store}>
           <PersistGate loading={null} persistor={Store.persistor}>
-            <AppProvider>
-              <HelmetProvider>
-                <CookiesProvider>
-                  <Root />
-                </CookiesProvider>
-              </HelmetProvider>
-            </AppProvider>
+            {/* <AppProvider> */}
+            <HelmetProvider>
+              <CookiesProvider>
+                <Root />
+              </CookiesProvider>
+            </HelmetProvider>
+            {/* </AppProvider> */}
           </PersistGate>
         </Provider>
       </ThemeProvider>

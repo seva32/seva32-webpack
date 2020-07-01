@@ -1,5 +1,8 @@
 import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+// import HTMLWebpackPlugin from "html-webpack-plugin";
+// import HtmlWebpackPrerenderPlugin from "html-webpack-prerender-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 // import webpack from "webpack";
 import config from "./webpack.config.babel";
 
@@ -18,14 +21,14 @@ export default {
   output: {
     ...config.output,
     filename: "[name].server.js",
-    libraryTarget: "commonjs",
+    libraryTarget: "umd",
   },
 
   mode: devMode ? "development" : "production",
 
   resolve: config.resolve,
 
-  // externals: ["react-helmet-async"],
+  externals: ["react-helmet-async"],
 
   module: {
     rules: [
@@ -67,6 +70,7 @@ export default {
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css",
     }),
+    new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["build"] }),
     ...config.plugins,
   ],
 };
