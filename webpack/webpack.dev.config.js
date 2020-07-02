@@ -52,9 +52,7 @@ export default {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              // only enable hot in development
-              hmr: process.env.NODE_ENV === "development",
-              // if hmr does not work, this is a forceful method.
+              hmr: true,
               reloadAll: true,
             },
           },
@@ -81,7 +79,7 @@ export default {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: process.env.NODE_ENV === "development",
+              hmr: true,
               reloadAll: true,
             },
           },

@@ -137,6 +137,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-reporter": "^5.0.0",
     "postcss-url": "^7.1.2",
+    "prettier": "^2.0.5",
     "source-map-support": "^0.5.19",
     "webpack-dashboard": "^3.2.0",
     "webpack-dev-middleware": "^3.7.2",
