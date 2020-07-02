@@ -5,7 +5,7 @@ function Test() {
   return (
     <div>
       {/* <Head title="test" /> */}
-      <h1>Test works again with fuck you too!</h1>
+      <h1>Test works again with me</h1>
     </div>
   );
 }
