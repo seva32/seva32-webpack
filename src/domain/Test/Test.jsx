@@ -1,10 +1,10 @@
 import React from "react";
-// import Head from "../../components/Head";
+import Head from "../../components/Head";
 
 function Test() {
   return (
     <div>
-      {/* <Head title="test" /> */}
+      <Head title="test" />
       <h1>Test works again with me</h1>
     </div>
   );

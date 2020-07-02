@@ -56,6 +56,26 @@ function render(req, res, preloadedState, routeData) {
     </Capture>
   );
 
+  // const body = ReactDOMServer.renderToString(
+  //   React.createElement(
+  //     Capture,
+  //     { report: (moduleName) => modules.push(moduleName) },
+  //     React.createElement(
+  //       HelmetProvider,
+  //       { context: helmetContext },
+  //       React.createElement(
+  //         Provider,
+  //         { store },
+  //         React.createElement(
+  //           CookiesProvider,
+  //           { cookies: req.universalCookies },
+  //           React.createElement(App, { ssrLocation: req.url, context })
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
+
   const { helmet } = helmetContext;
 
   const finalState = store.getState();

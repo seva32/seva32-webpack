@@ -95,7 +95,7 @@ const SignupFormUI = ({ error, signup, history }) => {
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="teal" textAlign="center">
             <Image src={imagePath} alt="No logo image" />
-            Sign up for a new account
+            Signup for a new account
           </Header>
           <Form onSubmit={formik.handleSubmit} size="large">
             <Segment>
@@ -161,12 +161,12 @@ const SignupFormUI = ({ error, signup, history }) => {
               />
 
               <Button color="red" fluid size="large" type="submit">
-                Sign Up
+                Signup
               </Button>
             </Segment>
           </Form>
 
-          <Message>Sing up with Google {renderGoogleAuth()}</Message>
+          <Message>Singup with Google {renderGoogleAuth()}</Message>
 
           {error && (
             <Message negative>
@@ -176,7 +176,7 @@ const SignupFormUI = ({ error, signup, history }) => {
           )}
 
           <Message>
-            Already have an account? <Link to="/signin">Sign In</Link>
+            Already have an account? <Link to="/signin">Signin</Link>
           </Message>
         </Grid.Column>
       </Grid>

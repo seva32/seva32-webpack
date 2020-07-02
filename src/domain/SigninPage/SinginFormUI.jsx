@@ -97,7 +97,7 @@ const SigninFormUI = ({ error, signin, history }) => {
         >
           <Header as="h2" color="teal" textAlign="center">
             <Image src={imagePath} alt="No logo image" />
-            Log-in to your account
+            Signin to your account
           </Header>
           <Form onSubmit={formik.handleSubmit} size="large">
             <Segment>
@@ -143,7 +143,7 @@ const SigninFormUI = ({ error, signin, history }) => {
               />
 
               <Button color="red" fluid size="large" type="submit">
-                Login
+                Signin
               </Button>
             </Segment>
           </Form>
@@ -158,7 +158,7 @@ const SigninFormUI = ({ error, signin, history }) => {
           )}
 
           <Message>
-            New to us? <Link to="/signup">Sign Up</Link>
+            New to us? <Link to="/signup">Signup</Link>
           </Message>
         </Grid.Column>
       </Grid>
