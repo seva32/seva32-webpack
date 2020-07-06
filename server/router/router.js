@@ -2,7 +2,7 @@ import passport from "passport";
 import { signup, signin } from "../contollers/authentications";
 // eslint-disable-next-line no-unused-vars
 import passportConfig from "../middleware/passport";
-import loadData from "../../src/utils/fetch/requireLoadData";
+import loadData from "../../src/utils/fetch/loadData";
 import render from "../rendering/render";
 
 // uso local strategy porque me llega email y pass

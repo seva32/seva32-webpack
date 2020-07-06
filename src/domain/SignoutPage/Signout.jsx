@@ -7,7 +7,7 @@ import * as actions from "../../actions";
 function Signout({ signout }) {
   useEffect(() => {
     signout();
-  }, []);
+  }, [signout]);
   return (
     <div>
       <RedirectWithStatus from="/signout" to="/" status={300} />

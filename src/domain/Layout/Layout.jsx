@@ -26,14 +26,12 @@ function Layout({ children, auth }) {
     }
   }, [auth]);
   return (
-    <>
-      <Container>
-        <NavBar leftItems={leftItems} rightItems={rightItems}>
-          <CookieConsent style={{ zIndex: "10" }} />
-          {children}
-        </NavBar>
-      </Container>
-    </>
+    <Container>
+      <NavBar leftItems={leftItems} rightItems={rightItems}>
+        <CookieConsent style={{ zIndex: "10" }} />
+        {children}
+      </NavBar>
+    </Container>
   );
 }
 

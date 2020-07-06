@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable object-shorthand */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
@@ -12,9 +14,11 @@ import serialize from "serialize-javascript";
 import { getBundles } from "react-loadable-ssr-addon";
 import { Capture } from "react-loadable";
 import { HelmetProvider } from "react-helmet-async";
+import { ServerStyleSheet } from "styled-components";
 import { devMiddleware } from "../middleware/webpack";
 import manifest from "../../build/react-loadable-ssr-addon.json";
-import App from "../../src/App";
+// import App from "../../src/App";
+// import rootReducer from "../../src/reducers/index";
 
 function getTemplate() {
   if (process.env.NODE_ENV === "production") {
@@ -28,12 +32,16 @@ function getTemplate() {
 }
 
 function render(req, res, preloadedState, routeData) {
-  const context = { data: routeData };
+  const context = {
+    data: routeData,
+  };
 
   const { default: rootReducer } = require("../../build/rootReducer.server");
+  const { default: App } = require("../../build/app.server");
 
   if (process.env.NODE_ENV !== "production") {
     delete require.cache[require.resolve("../../build/rootReducer.server")];
+    delete require.cache[require.resolve("../../build/app.server")];
   }
 
   const store = createStore(rootReducer, preloadedState);
@@ -44,7 +52,9 @@ function render(req, res, preloadedState, routeData) {
 
   const helmetContext = {};
 
-  const body = ReactDOMServer.renderToString(
+  const sheet = new ServerStyleSheet();
+
+  const body = ReactDOMServer.renderToString(sheet.collectStyles(
     <Capture report={(moduleName) => modules.push(moduleName)}>
       <HelmetProvider context={helmetContext}>
         <Provider store={store}>
@@ -54,22 +64,33 @@ function render(req, res, preloadedState, routeData) {
         </Provider>
       </HelmetProvider>
     </Capture>
-  );
+  ));
+
+  const stylesSC = sheet.getStyleTags();
 
   // const body = ReactDOMServer.renderToString(
   //   React.createElement(
   //     Capture,
-  //     { report: (moduleName) => modules.push(moduleName) },
+  //     {
+  //       report: (moduleName) => modules.push(moduleName),
+  //     },
   //     React.createElement(
   //       HelmetProvider,
-  //       { context: helmetContext },
+  //       {
+  //         context: helmetContext,
+  //       },
   //       React.createElement(
   //         Provider,
-  //         { store },
+  //         { store: store },
   //         React.createElement(
   //           CookiesProvider,
-  //           { cookies: req.universalCookies },
-  //           React.createElement(App, { ssrLocation: req.url, context })
+  //           {
+  //             cookies: req.universalCookies,
+  //           },
+  //           React.createElement(App, {
+  //             ssrLocation: req.url,
+  //             context: context,
+  //           })
   //         )
   //       )
   //     )
@@ -79,6 +100,9 @@ function render(req, res, preloadedState, routeData) {
   const { helmet } = helmetContext;
 
   const finalState = store.getState();
+
+  // eslint-disable-next-line import/no-unresolved
+  // const manifest = require("../../build/react-loadable-ssr-addon.json");
 
   const bundles = getBundles(manifest, [
     ...manifest.entrypoints,
@@ -105,6 +129,10 @@ function render(req, res, preloadedState, routeData) {
       `${styles
         .map((style) => `<link href="/${style.file}" rel="stylesheet" />`)
         .join("\n")}</head>`
+    )
+    .replace(
+      "</head>",
+      `${stylesSC}</head>`
     )
     .replace(
       "</body>",

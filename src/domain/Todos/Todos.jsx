@@ -26,7 +26,8 @@ function Todos(props) {
         setTodosArr([...todosArr, ...data]);
       })();
     }
-  }, []);
+  // eslint-disable-next-line react/destructuring-assignment
+  }, [props.staticContext, todosArr]);
   return (
     <Layout>
       <Helmet>

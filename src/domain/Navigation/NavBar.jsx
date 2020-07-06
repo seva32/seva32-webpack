@@ -33,6 +33,7 @@ import {
   Sidebar,
   Responsive,
 } from "semantic-ui-react";
+import MobileDetect from "mobile-detect";
 import map from "lodash/map";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
@@ -149,7 +150,16 @@ NavBarChildren.propTypes = {
   ]).isRequired,
 };
 
-const NavBar = ({ children, leftItems, rightItems }) => {
+const getWidthFactory = (isMobileFromSSR) => () => {
+  const isSSR = typeof window === "undefined";
+  const ssrValue = isMobileFromSSR
+    ? Responsive.onlyMobile.maxWidth
+    : Responsive.onlyTablet.minWidth;
+
+  return isSSR ? ssrValue : window.innerWidth;
+};
+
+const NavBar = ({ children, leftItems, rightItems, isMobileFromSSR }) => {
   const [visible, setVisible] = useState(false);
 
   const handlePusher = () => {
@@ -161,8 +171,12 @@ const NavBar = ({ children, leftItems, rightItems }) => {
   const handleToggle = () => setVisible(!visible);
 
   return (
-    <div>
-      <Responsive {...Responsive.onlyMobile}>
+    <>
+      <Responsive
+        fireOnMount
+        getWidth={getWidthFactory(isMobileFromSSR)}
+        maxWidth={Responsive.onlyMobile.maxWidth}
+      >
         <NavBarMobile
           leftItems={leftItems}
           onPusherClick={handlePusher}
@@ -173,11 +187,15 @@ const NavBar = ({ children, leftItems, rightItems }) => {
           <NavBarChildren>{children}</NavBarChildren>
         </NavBarMobile>
       </Responsive>
-      <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+      <Responsive
+        fireOnMount
+        getWidth={getWidthFactory(isMobileFromSSR)}
+        minWidth={Responsive.onlyTablet.minWidth}
+      >
         <NavBarDesktop leftItems={leftItems} rightItems={rightItems} />
         <NavBarChildren>{children}</NavBarChildren>
       </Responsive>
-    </div>
+    </>
   );
 };
 
@@ -200,6 +218,16 @@ NavBar.propTypes = {
       key: PropTypes.string,
     })
   ),
+  isMobileFromSSR: PropTypes.bool,
+};
+
+NavBar.getInitialProps = async ({ req }) => {
+  const md = new MobileDetect(req.headers["user-agent"]);
+  const isMobileFromSSR = !!md.mobile();
+
+  return {
+    isMobileFromSSR,
+  };
 };
 
 export default NavBar;

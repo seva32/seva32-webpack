@@ -3,7 +3,7 @@ import webpack from "webpack";
 import path from "path";
 import HTMLWebpackPlugin from "html-webpack-plugin";
 import HtmlWebpackPrerenderPlugin from "html-webpack-prerender-plugin";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
+// import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import config from "./webpack.config.babel";
 
@@ -13,7 +13,7 @@ export default {
   entry: {
     app: [
       "react-hot-loader/patch",
-      "webpack-hot-middleware/client?reload=true",
+      "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true",
       ...config.entry.app,
     ],
   },
@@ -27,6 +27,7 @@ export default {
       "react-dom": "@hot-loader/react-dom",
       "babel-plugin-syntax-dynamic-import":
         "@babel/plugin-syntax-dynamic-import",
+      react: path.resolve("./node_modules/react"),
     },
     ...config.resolve,
   },
@@ -107,7 +108,7 @@ export default {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HTMLWebpackPlugin({
-      template: path.resolve("src/index.html"),
+      template: path.resolve("build/index.html"),
       minify: { collapseWhitespace: false },
     }),
     new HtmlWebpackPrerenderPlugin({ main: "#root" }),
@@ -115,7 +116,7 @@ export default {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
-    new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["build"] }),
+    // new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["build"] }),
     ...config.plugins,
   ],
 

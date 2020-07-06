@@ -12,7 +12,7 @@ import { SigninFormUI } from "./domain/SigninPage";
 import { SignupFormUI } from "./domain/SignupPage";
 import { Signout } from "./domain/SignoutPage";
 import Loading from "./components/Loading";
-// import Test from "./domain/Test/Test";
+import HomeResponsive from "./domain/Responsive/HomeResponsive";
 
 if (!process.env.BROWSER) {
   global.window = {};
@@ -43,6 +43,7 @@ const App = ({ ssrLocation, context }) => (
         <Route path="/posts" component={Posts} />
         <Route path="/test" component={LoadableTest} />
         <Route path="/todos" component={LoadableTodos} />
+        <Route path="/responsive" component={HomeResponsive} />
         <RedirectWithStatus status={301} from="/home" to="/" />
         <Route component={NotFound} />
       </Switch>

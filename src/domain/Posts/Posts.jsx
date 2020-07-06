@@ -16,7 +16,7 @@ const Posts = ({ posts, error, fetchPosts }) => {
     if (posts && posts.length === 0) {
       fetchPosts();
     }
-  }, []);
+  }, [fetchPosts, posts]);
   return (
     <Layout>
       <Helmet>

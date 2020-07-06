@@ -7,10 +7,11 @@ const compiler = webpack(config);
 const devEnv = process.env.NODE_ENV !== "production";
 const devMiddleware = devEnv
   ? webpackDevMiddleware(compiler, {
-    contentBase: "../../build/",
+    contentBase: "build",
     watchContentBase: true,
     publicPath: "/",
-    hot: true,
+    serverSideRender: true,
+    noInfo: true,
   })
   : {};
 
